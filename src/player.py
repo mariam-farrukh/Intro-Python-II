@@ -11,4 +11,4 @@ class Player:
         if new_room:
             self.current_room = new_room
         else:
-            print("You bumped into a wall, try a different direction")
+            print("You tried to move, but nothing happened. Try a different direction")
