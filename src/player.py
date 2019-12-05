@@ -9,23 +9,23 @@ class Player:
 
     def add_item_in(self, item):
         self.inventory.append(item)
-        print(f"Added {item.name} to inventory")
+        print(f"Added {item.name} to inventory\n")
 
     def remove_item_in(self, item_name):
         for item in self.inventory:
             if item.name.lower() == item_name.lower():
                 self.inventory.remove(item)
-                print(f"You dropped {item.name}")
+                print(f"You dropped {item.name}\n")
                 return item
             else:
                 return None
 
     def list_inventory(self):
         if self.inventory == []:
-            print("Inventory: Empty")
+            print("Inventory: Empty\n")
         else:
             inventory = ", ".join([item.name for item in self.inventory])
-            print(f"Inventory: {inventory}")
+            print(f"Inventory: {inventory}\n")
 
     def item_locate(self, item_name):
         for item in self.inventory:
@@ -40,4 +40,4 @@ class Player:
         if new_room:
             self.current_room = new_room
         else:
-            print("You tried to move, but nothing happened. Try a different direction")
+            print("You tried to move, but nothing happened. Try a different direction\n")

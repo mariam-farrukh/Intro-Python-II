@@ -32,10 +32,10 @@ class Room:
 
     def items_avail(self):
         if self.list == []:
-            print("You look around and see no items here.")
+            print("You look around and see no items here.\n")
         else:
             for item in self.list:
-                print(f"You look around and find: {item.name}")
+                print(f"You look around and find: {item.name}\n")
 
     def __str__(self):
-        return f"Location: {self.name} \n Description: {self.description}"
+        return f"{self.name} >> {self.description}\n"
