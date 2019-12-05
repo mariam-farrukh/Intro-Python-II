@@ -82,7 +82,7 @@ while True:
     elif player_action == "q":
         print("See you next time!\n")
         exit() # can also use break here
-    elif player_action == "i":
+    elif player_action == "i" or "inventory":
         player.list_inventory()
     elif player_action == "l":
         current_room.items_avail()
