@@ -1,27 +1,31 @@
 from room import Room
 from player import Player
+from item import Item
 
 # Declare all the rooms
 
 room = {
-    'outside':  Room("Outside Cave Entrance",
- "North of you, the cave mount beckons"),
+    'outside':    Room("Outside Cave Entrance",
+ "North of you, the cave mount beckons", Item("rock", "That rock looks heavy, but it might be a good idea to take it with you...")),
 
     'foyer':    Room("Foyer", """Dim light filters in from the south. Dusty
-passages run north and east."""),
+passages run north and east.""", Item("sword", "You find a sword in a stone")),
 
-    'overlook': Room("Grand Overlook", """A steep cliff appears before you, falling
+    'overlook':    Room("Grand Overlook", """A steep cliff appears before you, falling
 into the darkness. Ahead to the north, a light flickers in
-the distance, but there is no way across the chasm."""),
+the distance, but there is no way across the chasm.""", Item("notepad", "There's a notepad underneath some rubble. There's some writing in it. Are they spells?")),
 
-    'narrow':   Room("Narrow Passage", """The narrow passage bends here from west
-to north. The smell of gold permeates the air."""),
+    'narrow':    Room("Narrow Passage", """The narrow passage bends here from west
+to north. The smell of gold permeates the air.""", Item("coin", "You see something sparkle on the ground. You walk closer to it and see that it's a gold coin.")),
 
-    'treasure': Room("Treasure Chamber", """You've found the long-lost treasure
+    'treasure':    Room("Treasure Chamber", """You've found the long-lost treasure
 chamber! Sadly, it has already been completely emptied by
-earlier adventurers. The only exit is to the south."""),
+earlier adventurers. The only exit is to the south.""", Item("key", "Looks like something was left behind. You found a mysterious key, but what does it do?")),
 }
 
+# What happens when I add a second item to the room?
+# If there are two items in a room and you only want the second one, you have to get the first item and then the second item, then drop the first item.
+# How do I solve this problem? Or should I just leave it?
 
 # Link rooms together
 
@@ -61,13 +65,30 @@ while True:
     print(current_room)
 
     direction = ["n", "s", "e", "w"]
-    player_cmd = input("Type n (North), s (South), e (East), or w (West) to move or q to quit the game: ").split(" ")[0]
-
-    if player_cmd in direction:
-        player.player_move(player_cmd)
-    elif player_cmd == "q":
-
+    actions = ["get", "drop"]
+    player_cmd = input("Move North (n), South (s), East (e), or West (w). Look around (l), 'get' or 'drop' an item, and check inventory (i). Quit (q) the game").split(" ")
+    player_action = player_cmd[0]
+    if len(player_cmd) > 1:
+        item_of_interest = player_cmd[1]
+    if player_action in direction:
+        player.player_move(player_action)
+    elif player_action == "q":
         print("See you next time!\n")
         exit() # can also use break here
+    elif player_action == "i":
+        player.list_inventory()
+    elif player_action == "l":
+        current_room.items_avail()
+    elif player_action in actions:
+        if player_action == "get":
+            item_location = current_room.item_locate(item_of_interest)
+            if item_location:
+                player.add_item_in(item_location)
+                current_room.delete_item(item_location)
+            else:
+                print("Can't find this item")
+        elif player_action == "drop":
+            item_removed = player.remove_item_in(item_of_interest)
+            current_room.add_item(item_removed)
     else:
         print("Invalid, please try again")

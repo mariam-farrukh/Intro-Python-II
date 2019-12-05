@@ -35,7 +35,7 @@ class Room:
             print("You look around and see no items here.")
         else:
             for item in self.list:
-                print(f"You search the room and find: {item.name}")
+                print(f"You look around and find: {item.name}")
 
     def __str__(self):
         return f"Location: {self.name} \n Description: {self.description}"
